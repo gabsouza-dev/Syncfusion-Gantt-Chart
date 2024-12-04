@@ -4,13 +4,16 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
   <title>Syncfusion Gantt Chart</title>
-  <script src="https://cdn.syncfusion.com/ej2/20.3.56/dist/ej2.min.js"></script>
   <link rel="stylesheet" href="https://cdn.syncfusion.com/ej2/20.3.56/material.css">
+  
+  <script src="https://cdn.syncfusion.com/ej2/20.3.56/dist/ej2.min.js"></script>
+  <style>#gantt { margin: 50px }</style>
 </head>
 
 <body>
-  <div id="gantt" style="margin: 50px;"></div>
+  <div id="gantt"></div>
   <script>
     const ganttData = [
       {
@@ -36,8 +39,15 @@
       }
     ];
 
+    function saveDataToLocalStorage(data) { localStorage.setItem('ganttData', JSON.stringify(data)); }
+
+    function loadDataFromLocalStorage() {
+      const data = localStorage.getItem('ganttData');
+      return data ? JSON.parse(data) : ganttData;
+    }
+
     const ganttChart = new ej.gantt.Gantt({
-      dataSource: ganttData,
+      dataSource: loadDataFromLocalStorage(),
       height: '450px',
       taskFields: {
         id: 'TaskID',
@@ -56,8 +66,24 @@
         mode: 'Dialog',
       },
       actionComplete: function (args) {
-        if (args.requestType === 'save') {
-          console.log('Tarefa salva:', args.data);
+        if (args.requestType === 'save' || args.requestType === 'delete') {
+          saveDataToLocalStorage(args.data);
+          alert("Alterações salvas com sucesso!");
+        }
+      },
+      validateFields: {
+        validateDate: function (args) {
+          if (args.data.EndDate < args.data.StartDate) {
+            alert("A data de término não pode ser anterior à data de início!");
+            args.cancel = true;
+          }
+        },
+
+        validateProgress: function (args) {
+          if (args.data.Progress < 0 || args.data.Progress > 100) {
+            alert("O progresso deve estar entre 0 e 100!");
+            args.cancel = true;
+          }
         }
       }
     });
