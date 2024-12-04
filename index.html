@@ -12,36 +12,42 @@
 <body>
   <div id="gantt" style="margin: 50px;"></div>
   <script>
-    async function fetchTasks() {
-      const response = await fetch('/tasks');
-      return await response.json();
-    }
+    const ganttData = [
+      {
+        TaskID: 1,
+        TaskName: "Task 1",
+        StartDate: new Date("2024-12-01"),
+        EndDate: new Date("2024-12-05"),
+        Progress: 50
+      },
+      {
+        TaskID: 2,
+        TaskName: "Task 2",
+        StartDate: new Date("2024-12-03"),
+        EndDate: new Date("2024-12-10"),
+        Progress: 20
+      },
+      {
+        TaskID: 3,
+        TaskName: "Task 3",
+        StartDate: new Date("2024-12-06"),
+        EndDate: new Date("2024-12-12"),
+        Progress: 80
+      }
+    ];
 
-    async function initGantt() {
-      const tasks = await fetchTasks();
-      const ganttData = tasks.map(task => ({
-        TaskID: task.id,
-        TaskName: task.name,
-        StartDate: new Date(task.start_date),
-        EndDate: new Date(task.end_date),
-        Progress: parseFloat(task.progress)
-      }));
-
-      new ej.gantt.Gantt({
-        dataSource: ganttData,
-        height: '450px',
-        taskFields: {
-          id: 'TaskID',
-          name: 'TaskName',
-          startDate: 'StartDate',
-          endDate: 'EndDate',
-          progress: 'Progress'
-        },
-        toolbar: ['Add', 'Edit', 'Delete', 'Update', 'Cancel'],
-      }).appendTo('#gantt');
-    }
-
-    initGantt();
+    new ej.gantt.Gantt({
+      dataSource: ganttData,
+      height: '450px',
+      taskFields: {
+        id: 'TaskID',
+        name: 'TaskName',
+        startDate: 'StartDate',
+        endDate: 'EndDate',
+        progress: 'Progress'
+      },
+      toolbar: ['Add', 'Edit', 'Delete', 'Update', 'Cancel'],
+    }).appendTo('#gantt');
   </script>
 </body>
 
