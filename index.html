@@ -36,7 +36,7 @@
       }
     ];
 
-    new ej.gantt.Gantt({
+    const ganttChart = new ej.gantt.Gantt({
       dataSource: ganttData,
       height: '450px',
       taskFields: {
@@ -47,7 +47,22 @@
         progress: 'Progress'
       },
       toolbar: ['Add', 'Edit', 'Delete', 'Update', 'Cancel'],
-    }).appendTo('#gantt');
+      allowEditing: true,
+      allowTaskbarEditing: true,
+      editSettings: {
+        allowEditing: true,
+        allowAdding: true,
+        allowDeleting: true,
+        mode: 'Dialog',
+      },
+      actionComplete: function (args) {
+        if (args.requestType === 'save') {
+          console.log('Tarefa salva:', args.data);
+        }
+      }
+    });
+
+    ganttChart.appendTo('#gantt');
   </script>
 </body>
 
