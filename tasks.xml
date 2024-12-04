@@ -1,16 +1,16 @@
 <tasks>
-    <task>
-        <id>1</id>
-        <name>Task 1</name>
-        <start_date>2024-12-01</start_date>
-        <end_date>2024-12-05</end_date>
-        <progress>50</progress>
-    </task>
-    <task>
-        <id>2</id>
-        <name>Task 2</name>
-        <start_date>2024-12-03</start_date>
-        <end_date>2024-12-10</end_date>
-        <progress>20</progress>
-    </task>
+  <task>
+    <id>1</id>
+    <name>Task 1</name>
+    <start_date>2024-12-01</start_date>
+    <end_date>2024-12-05</end_date>
+    <progress>50</progress>
+  </task>
+  <task>
+    <id>2</id>
+    <name>Task 2</name>
+    <start_date>2024-12-03</start_date>
+    <end_date>2024-12-10</end_date>
+    <progress>20</progress>
+  </task>
 </tasks>

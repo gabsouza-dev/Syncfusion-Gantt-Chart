@@ -4,25 +4,17 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Gantt Chart</title>
+  <title>Syncfusion Gantt Chart</title>
   <script src="https://cdn.syncfusion.com/ej2/20.3.56/dist/ej2.min.js"></script>
   <link rel="stylesheet" href="https://cdn.syncfusion.com/ej2/20.3.56/material.css">
 </head>
 
 <body>
-  <div id="gantt"></div>
+  <div id="gantt" style="margin: 50px;"></div>
   <script>
     async function fetchTasks() {
       const response = await fetch('/tasks');
       return await response.json();
-    }
-
-    async function updateTasks(tasks) {
-      await fetch('/tasks', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(tasks)
-      });
     }
 
     async function initGantt() {
@@ -45,24 +37,7 @@
           endDate: 'EndDate',
           progress: 'Progress'
         },
-        editSettings: {
-          allowEditing: true,
-          allowAdding: true,
-          allowDeleting: true,
-        },
         toolbar: ['Add', 'Edit', 'Delete', 'Update', 'Cancel'],
-        actionComplete: async (args) => {
-          if (args.requestType === 'save' || args.requestType === 'delete') {
-            const updatedTasks = ganttData.map(task => ({
-              id: task.TaskID,
-              name: task.TaskName,
-              start_date: task.StartDate.toISOString().split('T')[0],
-              end_date: task.EndDate.toISOString().split('T')[0],
-              progress: task.Progress.toString()
-            }));
-            await updateTasks(updatedTasks);
-          }
-        }
       }).appendTo('#gantt');
     }
 
